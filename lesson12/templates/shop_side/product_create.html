@@ -8,8 +8,11 @@
 
     <form method="POST">
         {% csrf_token %}
+        <p>Имя продукта: </p>
         <input type="text" name="name">
+        <p>Цена продукта: </p>
         <input type="number" name="price">
+        <p>Количество: </p>
         <input type="number" name="quantity">
         <select name="category">
             {% for category in category_list %}

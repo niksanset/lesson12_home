@@ -8,12 +8,35 @@
 
     <h1>Product List</h1>
     <a href="{% url 'product_create' %}">Create Product</a>
-    <div style="width: 300px; margin: auto; margin-top: 50px;">
-        {% for product in product_list %}
-            <p>{{ product.name }} -
-                <a href="{% url 'product_detail' product.slug %}">Detail</a>
-            </p>
+
+    <div style="padding-top: 100px;">
+        <form method="POST" action="{% url 'product_list' %}">
+            {% csrf_token %}
+            <select name="shop">
+                <option value="">All Shops</option>
+                {% for shop in shops %}
+                    <option value="{{ shop.title }}" {% if selected_shop == shop.title %}selected{% endif %}>{{ shop.title }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        
+        {% for product in products %}
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.quantity }}</p>
+            <ul>
+                {% for shop in product.shops.all %}
+                    <li>{{ shop.title }}</li>
+                {% endfor %}
+            </ul>
         {% endfor %}
+
+
+
+
+
+
+
     </div>
 
 </body>
